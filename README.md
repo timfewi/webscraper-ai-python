@@ -3,6 +3,21 @@
 
 This project is designed to teach Python programming fundamentals while building a sophisticated web scraper with AI capabilities.
 
+webscraper/
+├── .git/                    # Git repository
+├── .github/                 # GitHub configurations
+├── .gitignore              # Git ignore file
+├── .vscode/                # VS Code settings
+├── src/                    # Source code
+├── tests/                  # Test files
+├── examples/               # Example usage
+├── learning_steps/         # Documentation/tutorials
+├── README.md              # Project documentation
+├── requirements.txt       # Dependencies (create this)
+├── setup.py              # Package configuration (create this)
+├── pyproject.toml        # Modern Python packaging (create this)
+└── .env.example          # Environment variables template
+
 ## 🎯 Learning Objectives
 
 ### Phase 1: Python Fundamentals (Steps 1-5)

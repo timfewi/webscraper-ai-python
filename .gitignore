@@ -1,6 +1,7 @@
 # IDE and Editor directories
 .vscode/
 .idea/
+.github/workflows/
 
 # GitHub specific files (keeping .github for workflows but ignoring local configs)
 .github/workflows/
