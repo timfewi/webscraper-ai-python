@@ -95,14 +95,14 @@ class MyClass:
 ```python
 def calculate_discount(price: float, discount_rate: float) -> float:
     """Calculate the discounted price.
-    
+
     Args:
         price: The original price of the item.
         discount_rate: The discount rate as a decimal (0.1 for 10%).
-    
+
     Returns:
         The discounted price.
-    
+
     Raises:
         ValueError: If price is negative or discount_rate is not between 0 and 1.
     """
@@ -110,7 +110,7 @@ def calculate_discount(price: float, discount_rate: float) -> float:
         raise ValueError("Price cannot be negative")
     if not 0 <= discount_rate <= 1:
         raise ValueError("Discount rate must be between 0 and 1")
-    
+
     return price * (1 - discount_rate)
 ```
 
@@ -196,10 +196,10 @@ def validate_user_data(user_data: Dict[str, Any]) -> None:
     """Validate user data dictionary."""
     if not user_data:
         raise ValidationError("User data cannot be empty")
-    
+
     if "email" not in user_data:
         raise ValidationError("Email is required")
-    
+
     if not is_valid_email(user_data["email"]):
         raise ValidationError("Invalid email format")
 ```
@@ -214,10 +214,10 @@ class User:
     def __init__(self, email: str, name: str) -> None:
         self.email = email
         self.name = name
-    
+
     def __str__(self) -> str:
         return f"User(name={self.name})"
-    
+
     def __repr__(self) -> str:
         return f"User(email={self.email!r}, name={self.name!r})"
 ```

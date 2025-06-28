@@ -14,6 +14,8 @@ dependencies = [
     "selenium>=4.8.0",
     "pandas>=1.5.0",
     "numpy>=1.24.0",
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
 ]
 
 [project.optional-dependencies]
@@ -25,6 +27,8 @@ dev = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
     "types-requests>=2.28.0",
+    "bandit[toml]>=1.7.0",
+    "safety>=2.0.0",
 ]
 
 # Black formatter configuration
@@ -44,6 +48,7 @@ exclude = '''
   | buck-out
   | build
   | dist
+  | .env
 )/
 '''
 
@@ -71,6 +76,7 @@ exclude = [
     "dist",
     "node_modules",
     "venv",
+    "env",
 ]
 
 [tool.ruff.lint]
@@ -125,6 +131,13 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = "-ra -q --strict-markers --strict-config"
+pythonpath = ["."]
+markers = [
+    "integration: marks tests as integration tests (may be slow)",
+    "slow: marks tests as slow (may take longer to run)",
+    "unit: marks tests as unit tests (fast)",
+    "security: marks tests as security-related",
+]
 testpaths = ["tests"]
 
 # Coverage configuration

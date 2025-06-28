@@ -89,10 +89,10 @@ def test_user_service_create_user():
     # Arrange
     user_repo = Mock()
     user_service = UserService(user_repo)
-    
+
     # Act
     result = user_service.create_user({"name": "John"})
-    
+
     # Assert
     user_repo.save.assert_called_once()
 ```

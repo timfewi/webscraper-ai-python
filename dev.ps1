@@ -2,7 +2,7 @@
 # Usage: .\dev.ps1 <command>
 
 param(
-    [Parameter(Position=0)]
+    [Parameter(Position = 0)]
     [string]$Command = "help"
 )
 
@@ -52,7 +52,7 @@ function Lint-Code {
 
 function Type-Check {
     Write-Host "Type checking with MyPy..." -ForegroundColor Blue
-    mypy src/
+    mypy src/ --ignore-missing-imports
 }
 
 function Security-Check {

@@ -1,345 +1,144 @@
-# GitHub Copilot Instructions Guide
+# PEP 8 Style Guide - Quick Reference
 
-This guide provides best practices and instructions for effectively using GitHub Copilot in our Python webscraper project to maximize productivity and code quality.
+## Introduction
 
-## Getting Started with Copilot
+This document provides essential coding conventions for Python code. These guidelines improve code readability and consistency across Python projects.
 
-### Prerequisites
+**Key Principle**: Code is read much more often than it is written - prioritize readability.
 
-- GitHub Copilot subscription (Individual, Business, or Enterprise)
-- VS Code with GitHub Copilot extension installed
-- Python development environment configured
+## Code Layout
 
-### Initial Setup
+### Indentation
 
-1. Install the GitHub Copilot extension in VS Code
-2. Sign in with your GitHub account
-3. Enable Copilot in your workspace settings
-4. Familiarize yourself with keyboard shortcuts:
-   - `Tab` to accept suggestions
-   - `Esc` to dismiss suggestions
-   - `Alt + ]` / `Alt + [` to cycle through suggestions
-   - `Ctrl + Enter` to open Copilot suggestions panel
+- Use 4 spaces per indentation level
+- Never mix tabs and spaces
+- Continuation lines should align vertically or use hanging indent
 
-## Effective Prompting Techniques
+### Line Length
 
-### Context is Key
+- Limit lines to 79 characters maximum
+- Docstrings/comments limited to 72 characters
+- Use parentheses for line continuation (preferred over backslashes)
 
-Provide clear context through comments, function names, and variable names. Copilot uses surrounding code to generate better suggestions.
+### Blank Lines
 
-```python
-# Good: Clear context and intent
-def scrape_product_data(url: str, headers: dict) -> dict:
-    """
-    Scrape product information from e-commerce website.
-    Extract: title, price, description, availability
-    """
-    # Copilot will generate appropriate scraping logic here
+- 2 blank lines around top-level function and class definitions
+- 1 blank line around method definitions inside classes
+- Use blank lines sparingly within functions to separate logical sections
 
-# Better: Even more specific context
-class AmazonProductScraper:
-    def __init__(self, session: requests.Session):
-        self.session = session
-        self.base_url = "https://amazon.com"
+### Imports
 
-    def extract_product_title(self, soup: BeautifulSoup) -> str:
-        # Extract product title from Amazon product page
-        # Look for element with id 'productTitle'
-```
-
-### Use Descriptive Comments
-
-Write comments that describe what you want to achieve, not how to do it.
+- Put imports at top of file after module docstring
+- Group imports: standard library → third party → local application
+- One import per line (except `from module import name1, name2`)
+- Use absolute imports when possible
 
 ```python
-# Good: Describes the intent
-# Parse the JSON response and extract error messages if any
-response_data = json.loads(response.text)
+import os
+import sys
 
-# Better: More specific about expected structure
-# Extract error messages from API response
-# Expected format: {"errors": [{"message": "...", "code": "..."}]}
-```
-
-### Function and Variable Naming
-
-Use descriptive names that help Copilot understand the context and purpose.
-
-```python
-# Good naming helps Copilot generate better code
-def validate_scraped_product_data(product_info: dict) -> bool:
-    # Copilot understands this should validate product data
-
-def clean_extracted_price_text(raw_price_string: str) -> float:
-    # Copilot knows to clean and convert price text to float
-```
-
-## Code Generation Best Practices
-
-### Start with Structure
-
-Define the structure and let Copilot fill in the implementation details.
-
-```python
-class WebScraperBase:
-    def __init__(self, base_url: str, headers: dict = None):
-        # Copilot will suggest appropriate initialization
-
-    def make_request(self, url: str) -> requests.Response:
-        # Copilot will suggest request handling with error handling
-
-    def parse_response(self, response: requests.Response) -> BeautifulSoup:
-        # Copilot will suggest HTML parsing logic
-
-    def extract_data(self, soup: BeautifulSoup) -> dict:
-        # Copilot will suggest data extraction methods
-```
-
-### Use Type Hints
-
-Type hints help Copilot generate more accurate suggestions.
-
-```python
-from typing import List, Dict, Optional, Union
 import requests
 from bs4 import BeautifulSoup
 
-def scrape_multiple_pages(
-    urls: List[str],
-    headers: Dict[str, str],
-    delay: float = 1.0
-) -> List[Dict[str, any]]:
-    # Copilot will generate appropriate logic for multiple page scraping
+from mypackage import mymodule
 ```
 
-### Leverage Existing Imports
+## Whitespace
 
-Import the libraries you plan to use at the top of the file to give Copilot context.
+### Avoid Extra Whitespace
 
-```python
-import requests
-import time
-import json
-from bs4 import BeautifulSoup
-from selenium import webdriver
-from urllib.parse import urljoin, urlparse
-import logging
+- Inside parentheses: `spam(ham[1], {eggs: 2})`
+- Before commas/semicolons: `if x == 4: print(x, y)`
+- Before function call parentheses: `spam(1)`
 
-# Now Copilot knows which libraries are available and will suggest accordingly
-```
+### Use Single Spaces Around
 
-## Common Patterns and Templates
+- Assignment operators: `x = 1`
+- Comparisons: `x == y`, `x < y`, `x is None`
+- Booleans: `x and y`
 
-### Web Scraping Session Management
+### Function Arguments
 
-```python
-class ScrapingSession:
-    def __init__(self, headers: dict = None, proxy: dict = None):
-        # Initialize session with headers and proxy configuration
+- No spaces around `=` for keyword arguments: `func(arg=value)`
+- Spaces around `=` for annotated defaults: `func(arg: str = 'default')`
 
-    def __enter__(self):
-        # Setup session context manager
+## String Quotes
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        # Cleanup session resources
-```
+- Be consistent with single or double quotes
+- Use triple double quotes for docstrings: `"""Docstring"""`
 
-### Rate Limiting and Retry Logic
+## Comments and Docstrings
 
-```python
-def make_request_with_retry(
-    url: str,
-    max_retries: int = 3,
-    delay: float = 1.0,
-    backoff_factor: float = 2.0
-) -> requests.Response:
-    # Implement exponential backoff retry logic
-```
+- Comments should be complete sentences
+- Block comments start with `#` and single space
+- Inline comments separated by at least 2 spaces
+- Write docstrings for all public modules, functions, classes, methods
 
-### Data Validation and Cleaning
+## Naming Conventions
 
-```python
-def validate_scraped_data(data: dict, required_fields: List[str]) -> bool:
-    # Validate that all required fields are present and not empty
+### Styles
 
-def clean_text_data(raw_text: str) -> str:
-    # Remove extra whitespace, HTML entities, and normalize text
-```
+- `lowercase` or `lower_case_with_underscores` - functions, variables, modules
+- `UPPER_CASE_WITH_UNDERSCORES` - constants
+- `CapWords` - classes, exceptions (add "Error" suffix for exceptions)
+- `_single_leading_underscore` - internal use
+- `__double_leading_underscore` - name mangling in classes
 
-## Integration with Development Workflow
+### Specific Rules
 
-### Code Review Guidelines
+- Function/variable names: `function_name`, `variable_name`
+- Class names: `ClassName`
+- Constants: `MAX_SIZE`, `DEFAULT_TIMEOUT`
+- Methods: always use `self` for instance, `cls` for class methods
+- Avoid single characters: `l`, `O`, `I` (look like numbers)
 
-1. **Always review Copilot suggestions** before accepting
-2. **Test generated code** thoroughly, especially error handling
-3. **Verify security implications** of generated code
-4. **Check for proper error handling** and edge cases
-5. **Ensure code follows project style guide**
+## Programming Recommendations
 
-### Testing with Copilot
+### Comparisons
 
-```python
-import pytest
-from unittest.mock import Mock, patch
+- Use `is`/`is not` for singletons like `None`: `if x is not None:`
+- Use `isinstance()` instead of `type()`: `isinstance(obj, str)`
 
-class TestProductScraper:
-    def test_extract_product_title(self):
-        # Test successful title extraction
+### Sequences
 
-    def test_extract_product_title_missing_element(self):
-        # Test handling when title element is missing
+- Use truthiness for empty sequences: `if not seq:` instead of `if len(seq) == 0:`
 
-    def test_price_parsing_various_formats(self):
-        # Test price parsing with different currency formats
-```
+### Exception Handling
 
-### Documentation with Copilot
+- Be specific with exceptions: `except ValueError:` not bare `except:`
+- Use `try` blocks for minimal code only
+- Derive custom exceptions from `Exception`
 
-```python
-def scrape_product_listings(base_url: str, max_pages: int = 10) -> List[dict]:
-    """
-    Scrape product listings from multiple pages.
+### Functions
 
-    This function iterates through pagination and extracts product data
-    from each page. It includes rate limiting and error handling.
+- Use `def` statements, not lambda assignments
+- Be consistent with return statements (all return values or all return None)
 
-    Args:
-        base_url: The base URL of the product listing page
-        max_pages: Maximum number of pages to scrape (default: 10)
+### Best Practices
 
-    Returns:
-        List of dictionaries containing product information
+- Use `''.startswith()` and `''.endswith()` for string prefixes/suffixes
+- Use context managers (`with` statements) for resource management
+- Don't compare booleans with `==`: use `if flag:` not `if flag == True:`
 
-    Raises:
-        requests.RequestException: If HTTP request fails
-        ValueError: If URL is invalid or response is malformed
+## Type Hints (Modern Python)
 
-    Example:
-        >>> products = scrape_product_listings('https://example.com/products')
-        >>> len(products)
-        50
-    """
-    # Copilot will generate implementation based on docstring
-```
+- Use type hints for function parameters and return values
+- Format: `def function(param: str) -> int:`
+- Space after colon, spaces around arrow: `->`
 
-## Security and Ethics Considerations
+## Quick Checklist
 
-### Responsible Scraping Practices
+- ✅ 4-space indentation, no tabs
+- ✅ Lines ≤ 79 characters
+- ✅ Proper import grouping and placement
+- ✅ Consistent string quote style
+- ✅ Descriptive variable/function names in snake_case
+- ✅ Class names in CapWords
+- ✅ Constants in UPPER_CASE
+- ✅ Docstrings for public APIs
+- ✅ Specific exception handling
+- ✅ Type hints where helpful
 
-```python
-# Always check robots.txt before scraping
-def check_robots_txt(base_url: str) -> bool:
-    # Check if scraping is allowed according to robots.txt
+---
 
-# Implement proper delays between requests
-def respectful_delay(last_request_time: float, min_delay: float = 1.0):
-    # Calculate and implement appropriate delay between requests
-
-# Handle rate limiting gracefully
-def handle_rate_limit(response: requests.Response) -> bool:
-    # Check for rate limiting status codes and headers
-```
-
-### Data Privacy and Security
-
-```python
-# Sanitize sensitive data from logs
-def sanitize_url_for_logging(url: str) -> str:
-    # Remove sensitive parameters from URL before logging
-
-# Secure credential handling
-def load_credentials_from_env() -> dict:
-    # Load API keys and credentials from environment variables
-```
-
-## Troubleshooting Common Issues
-
-### When Copilot Suggestions Are Not Helpful
-
-1. **Add more context** through comments and variable names
-2. **Break down complex tasks** into smaller, specific functions
-3. **Use more descriptive function and variable names**
-4. **Add type hints** to clarify expected data types
-5. **Include example data structures** in comments
-
-### Improving Code Quality
-
-```python
-# Instead of accepting the first suggestion, consider:
-# 1. Error handling completeness
-# 2. Edge case coverage
-# 3. Performance implications
-# 4. Code maintainability
-# 5. Security considerations
-
-def robust_data_extraction(html_content: str) -> Optional[dict]:
-    """
-    Extract data with comprehensive error handling.
-    Handle cases: malformed HTML, missing elements, encoding issues
-    """
-    # Copilot will generate more robust code with this context
-```
-
-### Performance Optimization
-
-```python
-# Use specific comments to guide performance optimizations
-def optimize_bulk_scraping(urls: List[str]) -> List[dict]:
-    # Use asyncio for concurrent requests to improve performance
-    # Implement connection pooling for better resource utilization
-    # Add caching to avoid duplicate requests
-```
-
-## Best Practices Summary
-
-### Do's
-
-- ✅ Provide clear, descriptive context through comments
-- ✅ Use meaningful function and variable names
-- ✅ Add type hints for better suggestions
-- ✅ Review and test all generated code
-- ✅ Break complex tasks into smaller functions
-- ✅ Use docstrings to guide implementation
-- ✅ Import relevant libraries at the top of files
-
-### Don'ts
-
-- ❌ Accept suggestions without review
-- ❌ Use vague or generic comments
-- ❌ Ignore security implications
-- ❌ Skip testing generated code
-- ❌ Use generated code without understanding it
-- ❌ Rely solely on Copilot for architecture decisions
-
-## Advanced Tips
-
-### Custom Instructions
-
-You can create inline instructions for specific patterns:
-
-```python
-# COPILOT: Generate a retry decorator with exponential backoff
-# Pattern: @retry(max_attempts=3, delay=1.0, backoff=2.0)
-def retry_decorator(max_attempts: int, delay: float, backoff: float):
-    # Copilot will generate decorator implementation
-```
-
-### Context-Aware Generation
-
-```python
-# Set up context for the entire file
-"""
-This module handles web scraping for e-commerce websites.
-Focus on: error handling, rate limiting, data validation
-Libraries: requests, BeautifulSoup, selenium
-Pattern: session management with context managers
-"""
-
-# Now all suggestions in this file will be influenced by this context
-```
-
-## Conclusion
-
-GitHub Copilot is a powerful tool that can significantly enhance your Python development productivity when used effectively. The key to success is providing clear context, reviewing suggestions carefully, and maintaining good coding practices. Remember that Copilot is an assistant, not a replacement for thoughtful software engineering.
-
-Always prioritize code quality, security, and maintainability over speed of development.
+_This is a condensed version of PEP 8. For complete details, see the full specification._

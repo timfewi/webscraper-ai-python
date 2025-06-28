@@ -3,6 +3,9 @@
 .idea/
 .github/workflows/
 
+# Operating System files
+exports/
+
 # GitHub specific files (keeping .github for workflows but ignoring local configs)
 .github/workflows/
 # Python
