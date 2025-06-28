@@ -152,15 +152,30 @@ webscraper-ai-python/
 
 ### Available Commands
 
-```bash
-make setup-dev       # Setup development environment
-make format          # Format code with Black
-make lint            # Lint with Ruff
-make type-check      # Type check with MyPy
-make test            # Run tests
-make test-cov        # Run tests with coverage
-make ci              # Run full CI pipeline locally
-make clean           # Clean cache files
+```ps1
+# Show available commands
+.\dev.ps1 help
+
+# Setup development environment
+.\dev.ps1 setup-dev
+
+# Code quality
+.\dev.ps1 format
+.\dev.ps1 lint
+.\dev.ps1 type-check
+.\dev.ps1 check
+
+# Testing
+.\dev.ps1 test
+.\dev.ps1 test-cov
+
+# Maintenance
+.\dev.ps1 clean
+.\dev.ps1 security
+.\dev.ps1 pre-commit-all
+
+# Full CI pipeline
+.\dev.ps1 ci
 ```
 
 ### Code Quality
